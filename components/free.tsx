@@ -3,7 +3,7 @@ import React from "react";
 import obj from "../assets/teri";
 import { Link } from "expo-router";
 
-const Free = () => {
+const Free = ({ data }) => {
   return (
     <>
       <View
@@ -41,7 +41,7 @@ const Free = () => {
             flexDirection: "row",
           }}
         >
-          {obj.map((item, index) => (
+          {data?.map((item, index) => (
             <View
               key={index}
               style={{
@@ -76,7 +76,7 @@ const Free = () => {
                         width: 120,
                       }}
                       source={{
-                        uri: `https://image.tmdb.org/t/p/w185/${item.backdrop_path}`,
+                        uri: `https://image.tmdb.org/t/p/w500/${item.backdrop_path}`,
                       }}
                     />
                   </View>

@@ -1,20 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
 import obj from "../../assets/teri";
 import { Image, Pressable, Text, View } from "react-native";
+import axios from "axios";
 
 const details = () => {
-  const { id } = useLocalSearchParams();
-  let val: any = {};
-  if (id) {
-    val = obj.filter((e) => e.id === Number(id));
-  }
-  console.log(val[0].id);
+  const { id }: any = useLocalSearchParams();
+  const [val, setval] = useState("");
+  const [image, setimage] = useState("");
+  console.log();
+  useEffect(() => {
+    axios
+      .get(
+        `https://api.themoviedb.org/3/movie/${id}?api_key=8a67b0b749bbbedd752319839dcb6775`
+      )
+      .then((response) => {
+        setval(response.data);
+      });
+
+    axios
+      .get(
+        `https://api.themoviedb.org/3/movie/${id}/images?api_key=8a67b0b749bbbedd752319839dcb6775`
+      )
+      .then((response) => {
+        console.log("====================================");
+        console.log(response.data.backdrops[0].file_path);
+        console.log("====================================");
+        setimage(response.data.backdrops[0].file_path);
+      });
+  }, []);
+
   return (
     <>
       {val && (
         <View
-          key={val[0].id}
+          key={val?.id}
           style={{
             // backgroundColor: "pink",
             padding: 2,
@@ -32,11 +52,11 @@ const details = () => {
               shadowOpacity: 0.3,
             }}
             source={{
-              uri: `https://image.tmdb.org/t/p/w185/${val[0].backdrop_path}`,
+              uri: `https://image.tmdb.org/t/p/original/${image}`,
             }}
           />
           <View style={{ margin: 10, flexDirection: "row", gap: 5 }}>
-            {val[0].genre_ids.map((genre) => (
+            {val?.genre_ids?.map((genre) => (
               <Text
                 style={{
                   lineHeight: 30,
@@ -61,7 +81,7 @@ const details = () => {
               }}
             >
               <Text style={{ fontWeight: "500", fontSize: 20 }}>
-                {val[0].title}
+                {val?.title}
               </Text>
             </View>
             <View style={{ flexDirection: "row", gap: 10, marginTop: 10 }}>
@@ -102,7 +122,7 @@ const details = () => {
             </View>
             <View style={{ marginTop: 10 }}>
               <Text style={{ fontWeight: "200", fontSize: 15 }}>
-                {val[0].overview}
+                {val?.overview}
               </Text>
               <View
                 style={{

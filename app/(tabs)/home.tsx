@@ -1,12 +1,46 @@
 import { ScrollView, View, Text, Image, Pressable } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import obj from "../../assets/teri";
 import Free from "../../components/free";
 import top from "../../components/Top";
 import Top from "../../components/Top";
 import { Link } from "expo-router";
+import axios from "axios";
 
 const Home = () => {
+  const [popular, setpopular] = useState([]);
+  const [top, settop] = useState([]);
+  const [upcoming, setupcoming] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        `https://api.themoviedb.org/3/movie/popular?api_key=8a67b0b749bbbedd752319839dcb6775`
+      )
+      .then((response) => {
+        console.log("====================================");
+        console.log(response.data.results);
+        console.log("====================================");
+        setpopular(response.data.results);
+      });
+    axios
+      .get(
+        `https://api.themoviedb.org/3/movie/top_rated?api_key=8a67b0b749bbbedd752319839dcb6775`
+      )
+      .then((response) => {
+        settop(response.data.results);
+      });
+    axios
+      .get(
+        `https://api.themoviedb.org/3/movie/upcoming?api_key=8a67b0b749bbbedd752319839dcb6775`
+      )
+      .then((response) => {
+        console.log("====================================");
+        console.log(response.data.results);
+        console.log("====================================");
+        setupcoming(response.data.results);
+      });
+  }, []);
+
   return (
     <>
       <View
@@ -44,7 +78,7 @@ const Home = () => {
             flexDirection: "row",
           }}
         >
-          {obj.map((item, index) => (
+          {popular?.map((item, index) => (
             <View
               key={index}
               style={{
@@ -66,7 +100,7 @@ const Home = () => {
                   <Image
                     style={{ flex: 1, width: 120, borderRadius: 10 }}
                     source={{
-                      uri: `https://image.tmdb.org/t/p/w185/${item.backdrop_path}`,
+                      uri: `https://image.tmdb.org/t/p/w500/${item.backdrop_path}`,
                     }}
                   />
                 </Pressable>
@@ -75,8 +109,8 @@ const Home = () => {
           ))}
         </View>
       </ScrollView>
-      <Free />
-      <Top />
+      <Free data={upcoming} />
+      <Top data={top} />
     </>
   );
 };
