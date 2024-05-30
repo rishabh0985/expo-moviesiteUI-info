@@ -2,6 +2,7 @@ import { ScrollView, View, Text, Image, Pressable } from "react-native";
 import React from "react";
 import obj from "../assets/teri";
 import { Link } from "expo-router";
+import { Colors } from "@/constants/Colors";
 
 const Top = ({ data }) => {
   return (
@@ -10,11 +11,18 @@ const Top = ({ data }) => {
         style={{
           flexDirection: "row",
           alignItems: "baseline",
-          //  backgroundColor: "red",
+          backgroundColor: Colors.dark.bg,
           justifyContent: "space-between",
         }}
       >
-        <Text style={{ fontSize: 25, fontWeight: "bold", padding: 10 }}>
+        <Text
+          style={{
+            fontSize: 25,
+            fontWeight: "bold",
+            padding: 10,
+            color: Colors.dark.primary,
+          }}
+        >
           Free Movies
         </Text>
 
@@ -22,7 +30,7 @@ const Top = ({ data }) => {
           style={{
             padding: 10,
             fontWeight: "500",
-            color: "#7d8aef",
+            color: Colors.dark.primary,
             textDecorationLine: "underline",
           }}
         >

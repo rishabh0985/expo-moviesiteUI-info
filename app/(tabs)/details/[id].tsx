@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { useLocalSearchParams } from "expo-router";
-import obj from "../../assets/teri";
+import { useLocalSearchParams, router } from "expo-router";
+import obj from "../../../assets/teri";
 import { Image, Pressable, Text, View } from "react-native";
 import axios from "axios";
 
@@ -10,25 +10,27 @@ const details = () => {
   const [image, setimage] = useState("");
   console.log();
   useEffect(() => {
-    axios
-      .get(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=8a67b0b749bbbedd752319839dcb6775`
-      )
-      .then((response) => {
-        setval(response.data);
-      });
+    if (id) {
+      axios
+        .get(
+          `https://api.themoviedb.org/3/movie/${id}?api_key=8a67b0b749bbbedd752319839dcb6775`
+        )
+        .then((response) => {
+          setval(response.data);
+        });
 
-    axios
-      .get(
-        `https://api.themoviedb.org/3/movie/${id}/images?api_key=8a67b0b749bbbedd752319839dcb6775`
-      )
-      .then((response) => {
-        console.log("====================================");
-        console.log(response.data.backdrops[0].file_path);
-        console.log("====================================");
-        setimage(response.data.backdrops[0].file_path);
-      });
-  }, []);
+      axios
+        .get(
+          `https://api.themoviedb.org/3/movie/${id}/images?api_key=8a67b0b749bbbedd752319839dcb6775`
+        )
+        .then((response) => {
+          console.log("====================================");
+          console.log(response.data.backdrops[0].file_path);
+          console.log("====================================");
+          setimage(response.data.backdrops[0].file_path);
+        });
+    }
+  }, [id]);
 
   return (
     <>

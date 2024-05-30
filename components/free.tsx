@@ -2,6 +2,7 @@ import { ScrollView, View, Text, Image, Pressable } from "react-native";
 import React from "react";
 import obj from "../assets/teri";
 import { Link } from "expo-router";
+import { Colors } from "@/constants/Colors";
 
 const Free = ({ data }) => {
   return (
@@ -10,11 +11,18 @@ const Free = ({ data }) => {
         style={{
           flexDirection: "row",
           alignItems: "baseline",
-          //  backgroundColor: "red",
+          backgroundColor: Colors.dark.bg,
           justifyContent: "space-between",
         }}
       >
-        <Text style={{ fontSize: 25, fontWeight: "bold", padding: 10 }}>
+        <Text
+          style={{
+            fontSize: 25,
+            fontWeight: "bold",
+            padding: 10,
+            color: Colors.dark.primary,
+          }}
+        >
           Favourite Movie
         </Text>
 
@@ -22,7 +30,7 @@ const Free = ({ data }) => {
           style={{
             padding: 10,
             fontWeight: "500",
-            color: "#7d8aef",
+            color: Colors.dark.primary,
             textDecorationLine: "underline",
           }}
         >
@@ -32,9 +40,11 @@ const Free = ({ data }) => {
       <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        style={{
-          maxHeight: 180,
-        }}
+        style={
+          {
+            // maxHeight: 180,
+          }
+        }
       >
         <View
           style={{
@@ -47,39 +57,31 @@ const Free = ({ data }) => {
               style={{
                 //   backgroundColor: "pink",
                 padding: 2,
-                margin: 2,
+                // margin: 2,
+                flex: 1,
               }}
             >
               {/* <Text>{item.title}</Text> */}
               <Link href={`/details/${item.id}`}>
                 <Pressable
                   style={{
-                    width: 120,
-                    //  backgroundColor: "red",
-                    height: 160,
+                    overflow: "hidden",
+                    width: 200,
+                    height: 350,
                     borderRadius: 7,
+                    borderColor: Colors.dark.bg,
                     // overflow: "hidden",
                   }}
                 >
-                  <View
+                  <Image
                     style={{
                       flex: 1,
-                      shadowRadius: 10,
-                      shadowOpacity: 0.1,
-                      borderRadius: 10,
-                      overflow: "hidden",
+                      // width: 120,
                     }}
-                  >
-                    <Image
-                      style={{
-                        flex: 1,
-                        width: 120,
-                      }}
-                      source={{
-                        uri: `https://image.tmdb.org/t/p/w500/${item.backdrop_path}`,
-                      }}
-                    />
-                  </View>
+                    source={{
+                      uri: `https://image.tmdb.org/t/p/w500/${item.backdrop_path}`,
+                    }}
+                  />
                 </Pressable>
               </Link>
             </View>

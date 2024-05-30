@@ -4,7 +4,6 @@ const StackLayout = () => {
   return (
     <Stack>
       <Stack.Screen name="(tabs)" />
-      <Stack.Screen name="details" />
     </Stack>
   );
 };
